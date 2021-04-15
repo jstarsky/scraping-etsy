@@ -107,11 +107,12 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     rm -rf "${HOME}/.local" && \
     fix-permissions "${JULIA_PKGDIR}" "${CONDA_DIR}/share/jupyter"
 
-WORKDIR $HOME/app
+
+WORKDIR $HOME/work
 RUN pip install --upgrade pip
 RUN git clone git@github.com:jstarsky/scraping-etsy.git etsy
 RUN pwd
-WORKDIR $HOME/app/etsy
+WORKDIR $HOME/work/etsy
 
 RUN chmod 777 requirements.txt
 RUN pip install -r requirements.txt
