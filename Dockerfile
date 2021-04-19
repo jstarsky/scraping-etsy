@@ -1,21 +1,7 @@
-# FROM  jupyter/a-notebook
-# USER root
-# RUN apt-get update && apt-get install -y graphviz 
-
-# WORKDIR /app
-# RUN pip install --upgrade pip
-# RUN git clone https://github.com/cpatrickalves/scraping-etsy.git etsy
-# RUN pwd
-# WORKDIR /app/etsy
-
-# RUN chmod 777 requirements.txt
-# RUN pip install -r requirements.txt
-# Copyright (c) Jupyter Development Team.
-# Distributed under the terms of the Modified BSD License.
 ARG BASE_CONTAINER=jupyter/scipy-notebook
 FROM $BASE_CONTAINER
 
-LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
+LABEL maintainer="Jupyter Project <info@forthfactory.com>"
 
 # Set when building on Travis so that certain long-running build steps can
 # be skipped to shorten build time.
@@ -39,6 +25,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     fonts-dejavu \
     gfortran \
+    ssh-client \
     gcc && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -110,10 +97,8 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
 
 WORKDIR $HOME/work
 RUN pip install --upgrade pip
-RUN git clone git@github.com:jstarsky/scraping-etsy.git etsy
-RUN pwd
-WORKDIR $HOME/work/etsy
-
+RUN git clone https://github.com/jstarsky/scraping-etsy.git
+WORKDIR $HOME/work/scraping-etsy
 RUN chmod 777 requirements.txt
 RUN pip install -r requirements.txt
 WORKDIR $HOME
